@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "bf08cd83-603a-4b9a-af9f-c0493a520bf7",
+		"name": "Wykop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"basictoken\", jsonData.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"key\": \"{{key}}\",\r\n        \"secret\": \"{{secret}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wykop.pl/api/v3/auth",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"authtoken\", jsonData.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{basictoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"username\": \"{{login}}\",\r\n        \"password\": \"{{password}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wykop.pl/api/v3/login",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get barylkakrwi posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authtoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://wykop.pl/api/v3/tags/barylkakrwi/stream?sort=all",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"tags",
+						"barylkakrwi",
+						"stream"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blog add post image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"imageKey\", jsonData.data.key);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authtoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"url\": \"{{imageUrl}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wykop.pl/api/v3/media/photos?type=comments",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"media",
+						"photos"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "comments"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Blog add post image",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"url\": \"{{imageUrl}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://wykop.pl/api/v3/media/photos?type=comments",
+							"protocol": "https",
+							"host": [
+								"wykop",
+								"pl"
+							],
+							"path": [
+								"api",
+								"v3",
+								"media",
+								"photos"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "comments"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"key\": \"MrD1EOPxY60Q8N54wAbLyK4eVMZBjZJR2p9Xndvk3Veg7lWBqa\",\n        \"label\": \"barrel\",\n        \"mime_type\": \"image/png\",\n        \"url\": \"https://wykop.pl/cdn/c3201142/20a317ccfdd608ab0167073b6ec7e9070a511f8d198e973c80d2f53d0d1fd1ec.png?author=KrwawyBot&auth=13b6f463f38bd140585559e422371a17\",\n        \"size\": 25430,\n        \"width\": 600,\n        \"height\": 700\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Blog add post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"entryId\", jsonData.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authtoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"content\": \"test wpisu\",\r\n        \"photo\": \"{{imageKey}}\",\r\n        \"embed\": null,\r\n        \"survey\": null,\r\n        \"adult\": false\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wykop.pl/api/v3/entries",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"entries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blog add comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"commentId\", jsonData.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authtoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"content\": \"test komentarza do dodanego wpisu\",\r\n        \"photo\": null,\r\n        \"embed\": null,\r\n        \"adult\": false\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wykop.pl/api/v3/entries/{{entryId}}/comments",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"entries",
+						"{{entryId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blog vote post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authtoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://wykop.pl/api/v3/entries/{{entryId}}/votes",
+					"protocol": "https",
+					"host": [
+						"wykop",
+						"pl"
+					],
+					"path": [
+						"api",
+						"v3",
+						"entries",
+						"{{entryId}}",
+						"votes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
